@@ -6,7 +6,6 @@ image:
 
 stages:
   - format
-  - package
   - validate
   - test
   - deploy
@@ -34,20 +33,6 @@ terraform_format:
     - cd $TF_ROOT
     - terraform fmt -check -recursive
 
-#################################################
-# PACKAGE LAMBDA
-#################################################
-
-package_lambda:
-  stage: package
-
-  script:
-    - chmod +x scripts/package_lambda.sh
-    - ./scripts/package_lambda.sh
-
-  artifacts:
-    paths:
-      - src/lambda/lambda.zip
 
 #################################################
 # TERRAFORM VALIDATE
@@ -55,9 +40,6 @@ package_lambda:
 
 terraform_validate:
   stage: validate
-
-  dependencies:
-    - package_lambda
 
   script:
     - ls -R src/
@@ -82,9 +64,6 @@ test:
 
 deploy_lambda:
   stage: deploy
-
-  dependencies:
-    - package_lambda
 
   script:
     - cd $TF_ROOT
@@ -116,9 +95,6 @@ deploy_glue:
 
 deploy_both:
   stage: deploy
-
-  dependencies:
-    - package_lambda
 
   script:
     - chmod +x scripts/upload_glue.sh
