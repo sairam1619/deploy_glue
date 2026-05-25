@@ -16,8 +16,8 @@ variables:
   TF_ROOT: "infra"
 
 before_script:
-  - apk add --no-cache python3 py3-pip zip bash
-  - pip install pytest boto3 moto awscli
+  - apk add --no-cache bash curl unzip python3 py3-pip zip git wget
+  - pip install awscli --break-system-packages
   - terraform --version
   - aws --version
 
