@@ -23,7 +23,7 @@ resource "aws_lambda_function" "lambda_function" {
 
   handler = "app.lambda_handler"
 
-  runtime = "python3.14"
+  runtime = "python3.13"
 
   filename = data.archive_file.lambda_zip.output_path
 
