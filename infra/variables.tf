@@ -11,5 +11,19 @@ variable "glue_job_name" {
 }
 
 variable "s3_bucket" {
-  default = "your-glue-script-bucket"
+  default = "dev-cog-generic-glue-scripts"
+}
+
+variable "lambda_role_arn" {
+
+  description = "Lambda IAM Role ARN"
+
+  type = string
+}
+
+variable "glue_role_arn" {
+
+  description = "Glue IAM Role ARN"
+
+  type = string
 }
