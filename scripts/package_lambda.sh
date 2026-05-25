@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 cd src/lambda_code
 
-zip lambda.zip app.py
+zip -r lambda.zip .

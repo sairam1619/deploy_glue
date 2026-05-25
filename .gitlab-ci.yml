@@ -60,6 +60,7 @@ terraform_validate:
     - package_lambda
 
   script:
+    - ls -R src/
     - cd $TF_ROOT
     - terraform init
     - terraform validate
