@@ -14,6 +14,7 @@ stages:
 
 variables:
   TF_ROOT: "infra"
+  PYTHONPATH: "$CI_PROJECT_DIR"
 
 before_script:
   - apk add --no-cache python3 py3-pip zip bash
@@ -89,8 +90,7 @@ deploy_lambda:
     - terraform init
     - terraform apply -auto-approve -target=aws_lambda_function.lambda_function
 
-  rules:
-    - if: '$DEPLOY_LAMBDA == "true"'
+  when: manual
 
 #################################################
 # DEPLOY GLUE
@@ -107,8 +107,7 @@ deploy_glue:
     - terraform init
     - terraform apply -auto-approve -target=aws_glue_job.glue_job
 
-  rules:
-    - if: '$DEPLOY_GLUE == "true"'
+  when: manual
 
 #################################################
 # DEPLOY BOTH
@@ -128,8 +127,7 @@ deploy_both:
     - terraform init
     - terraform apply -auto-approve
 
-  rules:
-    - if: '$DEPLOY_BOTH == "true"'
+  when: manual
 
 #################################################
 # MANUAL DESTROY
