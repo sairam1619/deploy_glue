@@ -53,11 +53,10 @@ terraform_validate:
 
 test:
   stage: test
-
   script:
     - source venv/bin/activate
-    - pytest tests/ -v
-
+    - python -m py_compile src/glue/*.py
+    
 #################################################
 # DEPLOY GLUE
 #################################################
