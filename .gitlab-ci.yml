@@ -20,8 +20,8 @@ before_script:
   - python3 -m venv venv
   - source venv/bin/activate
   - pip install --upgrade pip
-  - pip install pytest boto3 moto awscli
-
+  - pip install -r requirements.txt
+  
 #################################################
 # TERRAFORM FORMAT
 #################################################
@@ -31,7 +31,7 @@ terraform_format:
 
   script:
     - cd $TF_ROOT
-    - terraform fmt -check -recursive
+    - terraform fmt
 
 
 #################################################
@@ -59,20 +59,6 @@ test:
     - pytest tests/ -v
 
 #################################################
-# DEPLOY LAMBDA
-#################################################
-
-deploy_lambda:
-  stage: deploy
-
-  script:
-    - cd $TF_ROOT
-    - terraform init
-    - terraform apply -auto-approve -target=aws_lambda_function.lambda_function
-
-  when: manual
-
-#################################################
 # DEPLOY GLUE
 #################################################
 
@@ -86,23 +72,6 @@ deploy_glue:
     - cd $TF_ROOT
     - terraform init
     - terraform apply -auto-approve -target=aws_glue_job.glue_job
-
-  when: manual
-
-#################################################
-# DEPLOY BOTH
-#################################################
-
-deploy_both:
-  stage: deploy
-
-  script:
-    - chmod +x scripts/upload_glue.sh
-    - ./scripts/upload_glue.sh
-
-    - cd $TF_ROOT
-    - terraform init
-    - terraform apply -auto-approve
 
   when: manual
 
